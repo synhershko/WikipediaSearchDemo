@@ -112,10 +112,14 @@ public class App
                 builder.field("title", title);
                 builder.field("text", page.getText());
 
-                builder.field("redirect", page.isRedirect());
-                builder.field("special", page.isSpecialPage());
-                builder.field("stub", page.isStub());
-                builder.field("disambiguation", page.isDisambiguationPage());
+                if (page.isRedirect())
+                    builder.field("redirect", page.getRedirectPage());
+                if (page.isSpecialPage())
+                    builder.field("special", true);
+                if (page.isStub())
+                    builder.field("stub", true);
+                if (page.isDisambiguationPage())
+                    builder.field("disambiguation", true);
 
                 builder.startArray("category");
                 for (String s : page.getCategories()) {

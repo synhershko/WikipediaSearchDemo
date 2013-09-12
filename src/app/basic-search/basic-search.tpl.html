@@ -1,0 +1,16 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+                <span class="span3">
+                    <input class="input-block-level" ng-model="queryTerm" type="text">
+                </span>&nbsp;
+        <button ng-click="search()" class="btn" type="button">Search</button>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span4">
+            <li ng-repeat="doc in results.hits.hits">
+                {{ doc._source.title }}
+            </li>
+        </div>
+    </div>
+</div>

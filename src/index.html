@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app="ngBoilerplate" ng-controller="AppCtrl">
+  <head>
+    <title>ng-boilerplate</title>
+
+    <!-- font awesome from BootstrapCDN -->
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
+    <link rel="stylesheet" type="text/css" href="<%= file %>" /><% }); %>
+
+    <!--[if IE 7>
+    <link rel="stylesheet" href="assets/font-awesome-ie7.min.css />
+    <![endif]-->
+
+    <!-- compiled CSS --><% scripts.forEach( function ( file ) { %>
+    <script type="text/javascript" src="<%= file %>"></script><% }); %>
+
+    <!-- it's stupid to have to load it here, but this is for the +1 button -->
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+      { "parsetags": "explicit" }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <h3 class="muted">Wikipedia Search Demo</h3>
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <ul class="nav">
+                <li ui-route="/home" ng-class="{active:$uiRoute}">
+                  <a href="#/home">
+                    <i class="icon-home"></i>
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a href="#/basic-search">
+                    <i class="icon-book"></i>
+                    Basic Search
+                  </a>
+                </li>
+                  <li ui-route="/about" ng-class="{active:$uiRoute}">
+                      <a href="#/about">
+                          <i class="icon-info-sign"></i>
+                          About
+                      </a>
+                  </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" ui-view="main"></div>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-inner">
+          <ul class="social">
+            <li><a target="_blank" href="http://twitter.com/synhershko"><i class="icon-twitter-sign"></i></a></li>
+            <li><a target="_blank" href="http://github.com/synhershko/WikipediaSearchDemo"><i class="icon-github-sign"></i></a></li>
+          </ul>
+          
+          <p>
+            (c) Wikipedia Search Demo, 2013 Itamar Syn-Hershko, using ng-boilerplate by Josh David Miller and ElasticSearch.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

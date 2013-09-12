@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WikipediaSearchDemo.iml" filepath="$PROJECT_DIR$/WikipediaSearchDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wikipedia-indexer/wikipedia-indexer.iml" filepath="$PROJECT_DIR$/wikipedia-indexer/wikipedia-indexer.iml" />
     </modules>
   </component>
 </project>

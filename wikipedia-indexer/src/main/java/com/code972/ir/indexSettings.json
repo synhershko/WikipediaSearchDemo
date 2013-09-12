@@ -1,0 +1,49 @@
+{"template":"{TEMPLATE-INDEX-NAME}", "settings":{
+    "number_of_shards":1,
+    "number_of_replicas":0
+    ,"more":{}
+}, "mappings":{
+    "thread":{
+        "_timestamp" : { "enabled": true },
+        "_source":{ "enabled":true },
+        "_all":{ "enabled":false },
+        "properties":{
+            "_analyzer":{
+                "type":"string",
+                "index":"no"
+            },
+            "link":{
+                "type":"string",
+                "index":"not_analyzed"
+            },
+            "category":{
+                "type":"string",
+                "index":"not_analyzed"
+            },
+
+            "title":{
+                "type":"string",
+                "term_vector":"with_positions_offsets",
+                "analyzer":"wiki_analyzer"
+            },
+            "text":{
+                "type":"string",
+                "term_vector":"with_positions_offsets",
+                "analyzer":"wiki_analyzer"
+            },
+
+            "redirect":{
+                "type":"boolean"
+            },
+            "special":{
+                "type":"boolean"
+            },
+            "stub":{
+                "type":"boolean"
+            },
+            "disambiguation":{
+                "type":"boolean"
+            }
+        }
+    }
+}}

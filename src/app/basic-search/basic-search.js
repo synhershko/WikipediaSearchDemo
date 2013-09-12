@@ -1,7 +1,8 @@
 var basicSearchModule = angular.module( 'ngBoilerplate.basic-search', [
     'ui.state',
     'titleService',
-    'plusOne'
+    'plusOne',
+    'ngSanitize'
 ]);
 
 basicSearchModule.config(function config( $stateProvider ) {
@@ -21,7 +22,17 @@ basicSearchModule.controller( 'BasicSearchCtrl', function HomeController( $scope
 
     var ejs = ejsResource('http://localhost:9200');
 
-    var oQuery = ejs.QueryStringQuery().defaultField('text');
+    var oQuery = ejs.QueryStringQuery().fields(['title^10', 'text'])
+        .analyzer('wiki_analyzer')
+        .useDisMax(false).defaultOperator('AND');
+    var oFilter = ejs.AndFilter(
+        [
+            ejs.MissingFilter('redirect'),
+            ejs.MissingFilter('special'),
+            ejs.MissingFilter('stub'),
+            ejs.MissingFilter('disambiguation')
+        ]
+    );
 
     var client = ejs.Request()
         .indices('wiki-enwiki')
@@ -30,6 +41,8 @@ basicSearchModule.controller( 'BasicSearchCtrl', function HomeController( $scope
     $scope.search = function() {
         $scope.results = client
             .query(oQuery.query($scope.queryTerm || '*'))
+            .filter(oFilter)
+            .highlight(ejs.Highlight('text', 'title').type('fast-vector-highlighter'))
             .doSearch();
     };
 });

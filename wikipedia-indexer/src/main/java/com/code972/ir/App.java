@@ -1,6 +1,7 @@
 package com.code972.ir;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Strings;
 import com.google.common.io.Resources;
 import edu.jhu.nlp.wikipedia.PageCallbackHandler;
 import edu.jhu.nlp.wikipedia.WikiPage;
@@ -112,8 +113,12 @@ public class App
                 builder.field("title", title);
                 builder.field("text", page.getText());
 
-                if (page.isRedirect())
-                    builder.field("redirect", page.getRedirectPage());
+                if (page.isRedirect()) {
+                    if (!Strings.isNullOrEmpty(page.getRedirectPage()))
+                        builder.field("redirect", page.getRedirectPage());
+                    else
+                        builder.field("redirect", "#");
+                }
                 if (page.isSpecialPage())
                     builder.field("special", true);
                 if (page.isStub())

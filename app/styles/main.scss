@@ -1,0 +1,97 @@
+$iconSpritePath: "../images/glyphicons-halflings.png";
+$iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
+
+@import "bootstrap-sass/lib/bootstrap";
+
+/* Put your CSS here */
+html, body {
+  margin: 20px;
+}
+
+body {
+    background: #fafafa;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+}
+
+.hero-unit {
+    margin: 50px auto 0 auto;
+    width: 300px;
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 30px;
+    background-color: #eee;
+    border-radius: 6px;
+    padding: 60px;
+}
+
+.hero-unit h1 {
+    font-size: 60px;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.search-results {
+  margin: 40px 0 80px 0;
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 55px;
+    line-height: 1;
+  }
+
+  .lead {
+    font-size: 24px;
+    line-height: 1.25;
+  }
+
+  .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+  }
+
+  em, em.hlt1, em.hlt2, em.hlt3, em.hlt4, em.hlt5, em.hlt6, em.hlt7, em.hlt8, em.hlt9, em.hlt10 {
+    background-color: #ffc;
+    padding: 0 2px;
+  }
+
+  li {
+    display: block;
+    border: 1px solid #000;
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  li a.title { font-weight: bold; font-size:20px; margin-bottom: 5px; }
+}
+
+.footer {
+  margin-top: 80px;
+
+  .footer-inner {
+    padding: 40px 0;
+    border-top: 1px solid #DDD;
+  }
+
+  .social {
+    float: right;
+    margin: 0;
+    list-style: none;
+
+    li {
+      float: left;
+      margin-left: 20px;
+
+      a, a:visited {
+        color: #ccc;
+        text-decoration: none;
+        font-size: 40px;
+
+        &:hover {
+          color: gray;
+        }
+      }
+    }
+  }
+}

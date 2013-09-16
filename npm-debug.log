@@ -1,0 +1,61 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'controller:angular' ]
+2 info using npm@1.3.8
+3 info using node@v0.10.18
+4 verbose node symlink /usr/bin/node
+5 warn package.json wikipediasearch@0.0.0 No description
+6 warn package.json wikipediasearch@0.0.0 No repository field.
+7 warn package.json wikipediasearch@0.0.0 No README data
+8 verbose readDependencies using package.json deps
+9 verbose cache add [ 'controller:angular', null ]
+10 verbose cache add name=undefined spec="controller:angular" args=["controller:angular",null]
+11 verbose parsed url { protocol: 'controller:',
+11 verbose parsed url   slashes: null,
+11 verbose parsed url   auth: null,
+11 verbose parsed url   host: 'angular',
+11 verbose parsed url   port: null,
+11 verbose parsed url   hostname: 'angular',
+11 verbose parsed url   hash: null,
+11 verbose parsed url   search: null,
+11 verbose parsed url   query: null,
+11 verbose parsed url   pathname: null,
+11 verbose parsed url   path: null,
+11 verbose parsed url   href: 'controller:angular' }
+12 silly lockFile cbdf08a3-controller-angular controller:angular
+13 verbose lock controller:angular /home/synhershko/.npm/cbdf08a3-controller-angular.lock
+14 silly lockFile cbdf08a3-controller-angular controller:angular
+15 silly lockFile cbdf08a3-controller-angular controller:angular
+16 verbose addNamed [ 'controller:angular', '' ]
+17 verbose addNamed [ null, '*' ]
+18 silly lockFile ee60805e-controller-angular controller:angular@
+19 verbose lock controller:angular@ /home/synhershko/.npm/ee60805e-controller-angular.lock
+20 silly addNameRange { name: 'controller:angular', range: '*', hasData: false }
+21 verbose url raw controller:angular
+22 verbose url resolving [ 'https://registry.npmjs.org/', './controller%3Aangular' ]
+23 verbose url resolved https://registry.npmjs.org/controller%3Aangular
+24 info trying registry request attempt 1 at 17:50:25
+25 http GET https://registry.npmjs.org/controller%3Aangular
+26 http 404 https://registry.npmjs.org/controller%3Aangular
+27 silly registry.get cb [ 404,
+27 silly registry.get   { server: 'CouchDB/1.3.1 (Erlang OTP/R15B03)',
+27 silly registry.get     date: 'Sun, 15 Sep 2013 14:50:43 GMT',
+27 silly registry.get     'content-type': 'application/json',
+27 silly registry.get     'content-length': '52',
+27 silly registry.get     'cache-control': 'must-revalidate' } ]
+28 silly lockFile ee60805e-controller-angular controller:angular@
+29 silly lockFile ee60805e-controller-angular controller:angular@
+30 error 404 'controller%3Aangular' is not in the npm registry.
+30 error 404 You should bug the author to publish it
+30 error 404
+30 error 404 Note that you can also install from a
+30 error 404 tarball, folder, or http url, or git url.
+31 error System Linux 3.5.0-28-generic
+32 error command "/usr/bin/node" "/usr/bin/npm" "install" "controller:angular"
+33 error cwd /home/synhershko/code/WikipediaSearch
+34 error node -v v0.10.18
+35 error npm -v 1.3.8
+36 error code E404
+37 verbose exit [ 1, true ]

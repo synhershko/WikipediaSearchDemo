@@ -36,7 +36,7 @@ angular.module('WikipediaSearchApp')
             $scope.results = client
                 .query(oQuery.query($scope.queryTerm || '*'))
                 .filter(oFilter)
-                .highlight(ejs.Highlight(['title', 'text']))
+                .highlight(ejs.Highlight(['title', 'text']).type('fast-vector-highlighter'))
                 .from(($scope.currentPage - 1) * $scope.pageSize).size($scope.pageSize)
                 .doSearch(function(rsp) { $scope.totalResults = rsp.hits.total; });
         };

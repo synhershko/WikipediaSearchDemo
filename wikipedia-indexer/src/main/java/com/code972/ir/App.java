@@ -47,7 +47,7 @@ public class App
                 .put("node.name", "indexer").build();
 
         TransportClient transportClient = new TransportClient(settings);
-        transportClient.addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
+        transportClient.addTransportAddress(new InetSocketTransportAddress("localhost", 19300));
         Client client = transportClient;
 
         client.admin().indices().preparePutTemplate("wiki-pages-template")

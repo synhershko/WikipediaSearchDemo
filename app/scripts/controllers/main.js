@@ -2,7 +2,7 @@
 
 angular.module('WikipediaSearchApp')
   .controller('MainCtrl', function ($scope, ejsResource) {
-        var ejs = ejsResource('http://localhost:9200');
+        var ejs = ejsResource('http://localhost:19200');
 
         var oQuery = ejs.QueryStringQuery().fields(['title^10', 'text'])
             .analyzer('wiki_analyzer')

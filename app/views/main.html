@@ -22,6 +22,7 @@
             <li ng-repeat="doc in results.hits.hits">
                 <p><a href="http://http://en.wikipedia.org/wiki/{{ doc._source.title }}" class="title" target="_blank" ng-bind-html="doc.highlight.title[0] || doc._source.title"></a></p>
                 <p><span class="snippet" ng-repeat="h in doc.highlight.text" ng-bind-html="h + '... '"></span></p>
+                <i class="icon-magnet pull-right" ng-click="doMoreLikeThis(doc._id, doc._source.title, doc._source.text)"></i>
             </li>
         </ul>
         <div class="span8" ng-show="totalResults > 0">

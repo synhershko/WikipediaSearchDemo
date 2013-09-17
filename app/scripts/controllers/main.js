@@ -61,4 +61,22 @@ angular.module('WikipediaSearchApp')
 
                 .doSearch(function(rsp) { $scope.totalResults = rsp.hits.total; });
         };
-  });
+
+        $scope.doMoreLikeThis = function(docId, titleText, contentText) {
+            if (docId == null) {
+                $scope.moreLikeThisResults = null;
+                return;
+            }
+
+            var mltQuery = ejs.BoolQuery()
+                .should(ejs.MoreLikeThisQuery('title', titleText).boost(2.0))
+                .should(ejs.MoreLikeThisQuery('text', contentText))
+                .minimumNumberShouldMatch(1);
+
+            $scope.moreLikeThisResults = ejs.Request().indices('wiki-enwiki').types('wikipage')
+                .query(ejs.FilteredQuery(mltQuery, ejs.AndFilter([ejs.NotFilter(ejs.TermFilter('_id', docId))].concat(oFilters))))
+                .doSearch();
+        };
+
+  })
+;

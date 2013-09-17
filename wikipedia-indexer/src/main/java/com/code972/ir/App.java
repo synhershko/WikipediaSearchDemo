@@ -168,6 +168,9 @@ public class App
                         @Override
                         public void onResponse(BulkResponse bulkResponse) {
                             onGoingBulks.decrementAndGet();
+                            if (bulkResponse.hasFailures()) {
+                                logger.warn("Bulk response has failures");
+                            }
                         }
 
                         @Override

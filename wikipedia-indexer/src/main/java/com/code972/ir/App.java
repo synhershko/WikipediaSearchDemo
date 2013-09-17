@@ -17,6 +17,7 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.indices.IndexAlreadyExistsException;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,6 +61,11 @@ public class App
                         "            }\n" +
                         "        }")).execute().actionGet();
 
+        try {
+            client.admin().indices().prepareCreate("wiki-enwiki").execute().actionGet();
+        } catch (IndexAlreadyExistsException e) {
+            // do nothing to allow reindexing
+        }
         final WikiXMLParser parser = WikiXMLParserFactory.getSAXParser(new File(dumpFile).toURL());
         try {
             parser.setPageCallback(new PageCallback(client, "wiki-enwiki"));

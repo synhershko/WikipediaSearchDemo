@@ -7,3 +7,6 @@ vendor/
 wiki*/target/
 libraries/
 workspace.xml
+.sass-cache/
+.tmp/
+*debuglog.txt

@@ -7,6 +7,10 @@ angular.module('WikipediaSearchApp', [ 'ngSanitize', 'elasticjs.service' ])
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/suggestions', {
+        templateUrl: 'views/suggestions.html',
+        controller: 'SuggestionsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

@@ -31,6 +31,18 @@ body {
     letter-spacing: -1px;
 }
 
+.filters {
+  margin: 40px 0 0 0;
+}
+.category-filter {
+    a { }
+    .icon-remove-sign { display:none;}
+}
+.category-filter.selected {
+    a { font-weight:bold; }
+    .icon-remove-sign { display:inline;}
+}
+
 .search-results {
   margin: 40px 0 80px 0;
 

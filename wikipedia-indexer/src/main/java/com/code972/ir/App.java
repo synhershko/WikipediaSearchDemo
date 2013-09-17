@@ -17,6 +17,7 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.indices.IndexAlreadyExistsException;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +48,7 @@ public class App
                 .put("node.name", "indexer").build();
 
         TransportClient transportClient = new TransportClient(settings);
-        transportClient.addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
+        transportClient.addTransportAddress(new InetSocketTransportAddress("localhost", 19300));
         Client client = transportClient;
 
         client.admin().indices().preparePutTemplate("wiki-pages-template")
@@ -60,6 +61,11 @@ public class App
                         "            }\n" +
                         "        }")).execute().actionGet();
 
+        try {
+            client.admin().indices().prepareCreate("wiki-enwiki").execute().actionGet();
+        } catch (IndexAlreadyExistsException e) {
+            // do nothing to allow reindexing
+        }
         final WikiXMLParser parser = WikiXMLParserFactory.getSAXParser(new File(dumpFile).toURL());
         try {
             parser.setPageCallback(new PageCallback(client, "wiki-enwiki"));

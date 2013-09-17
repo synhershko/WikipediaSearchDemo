@@ -3,7 +3,7 @@
     "number_of_replicas":0
     ,"more":{}
 }, "mappings":{
-    "thread":{
+    "wikipage":{
         "_timestamp" : { "enabled": true },
         "_source":{ "enabled":true },
         "_all":{ "enabled":false },

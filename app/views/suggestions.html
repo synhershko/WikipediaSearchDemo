@@ -1,0 +1,5 @@
+<div class="container-fluid">
+    <pre>Model: {{selected | json}}</pre>
+    <input type="text" ng-change="onedit()" ng-model="selected" typeahead="suggestion for suggestion in suggestions | filter:$viewValue">
+    <pre ng-repeat="s in suggestions.hits.hits">{{ s.fields.title }}</pre>
+</div>

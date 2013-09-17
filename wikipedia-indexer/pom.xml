@@ -42,7 +42,7 @@
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>0.90.3</version>
+            <version>0.90.4</version>
         </dependency>
         <dependency>
             <groupId>edu.jhu.nlp</groupId>

@@ -147,14 +147,14 @@ public class App
                 builder.endObject();
                 // For now, we index (and not create) since we need to keep track of what we indexed...
                 currentRequest.add(client.prepareIndex(indexName, "wikipage", page.getID()).setCreate(false).setSource(builder));
-                processBulkIfNeeded();
+                processBulkIfNeeded(page.getID());
             } catch (Exception e) {
                 logger.warn("failed to construct index request", e);
             }
         }
 
         int inserted = 0;
-        private void processBulkIfNeeded() {
+        private void processBulkIfNeeded(String id) {
             if (currentRequest.numberOfActions() >= bulkSize) {
                 // execute the bulk operation
                 int currentOnGoingBulks = onGoingBulks.incrementAndGet();
@@ -190,7 +190,7 @@ public class App
                 }
 
                 inserted += currentRequest.numberOfActions();
-                System.out.println("Inserted " + inserted);
+                System.out.println("Inserted " + inserted + " last id " + id);
 
                 currentRequest = client.prepareBulk();
             }

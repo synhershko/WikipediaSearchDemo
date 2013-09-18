@@ -6,6 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/wikipedia-indexer" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="sass-stdlib" level="application" />
   </component>
 </module>
 

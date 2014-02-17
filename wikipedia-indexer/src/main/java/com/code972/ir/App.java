@@ -35,7 +35,7 @@ public class App
         String dumpFile = null;
         if (args.length > 0) dumpFile = args[0];
         if (dumpFile == null || dumpFile.length() == 0) {
-            dumpFile = "/home/synhershko/Downloads/enwiki-latest-pages-articles.xml.bz2";
+            dumpFile = "/media/windows-share/hewiki-20140207-pages-articles.xml.bz2";
         }
 
         if (!new File(dumpFile).exists()) {
@@ -43,32 +43,27 @@ public class App
             return;
         }
 
+        final String wikipediaIndexName = "hebrew-wikipedia";
+
         Settings settings = ImmutableSettings.settingsBuilder()
-                .put("cluster.name", "data-tests")
+                .put("cluster.name", "tests")
                 .put("node.name", "indexer").build();
 
         TransportClient transportClient = new TransportClient(settings);
-        transportClient.addTransportAddress(new InetSocketTransportAddress("localhost", 19300));
+        transportClient.addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
         Client client = transportClient;
 
-        client.admin().indices().preparePutTemplate("wiki-pages-template")
-                .setSource(indexSettingsString("wiki-*", 0, ",\"analysis\" : {\n" +
-                        "            \"analyzer\" : {\n" +
-                        "                \"wiki_analyzer\" : {\n" +
-                        "                    \"type\" : \"snowball\",\n" +
-                        "                    \"language\" : \"English\"\n" +
-                        "                }\n" +
-                        "            }\n" +
-                        "        }")).execute().actionGet();
+        client.admin().indices().preparePutTemplate("hebrew-general")
+                .setSource(indexSettingsString("hebrew-*", 0, "")).execute().actionGet();
 
         try {
-            client.admin().indices().prepareCreate("wiki-enwiki").execute().actionGet();
+            client.admin().indices().prepareCreate(wikipediaIndexName).execute().actionGet();
         } catch (IndexAlreadyExistsException e) {
             // do nothing to allow reindexing
         }
         final WikiXMLParser parser = WikiXMLParserFactory.getSAXParser(new File(dumpFile).toURL());
         try {
-            parser.setPageCallback(new PageCallback(client, "wiki-enwiki"));
+            parser.setPageCallback(new PageCallback(client, wikipediaIndexName));
         } catch (Exception e) {
             //logger.error("failed to create parser", e);
             System.out.println(e);
@@ -114,10 +109,13 @@ public class App
                 logger.trace(String.format("page #%s: %s", page.getID(), page.getTitle()));
             }
 
+            if (page.isSpecialPage())
+                return;
+
             try {
                 XContentBuilder builder = XContentFactory.jsonBuilder().startObject();
                 builder.field("title", title);
-                builder.field("text", page.getText());
+                builder.field("text", page.getText().trim());
 
                 if (page.isRedirect()) {
                     if (!Strings.isNullOrEmpty(page.getRedirectPage()))
@@ -132,7 +130,7 @@ public class App
                 if (page.isDisambiguationPage())
                     builder.field("disambiguation", true);
 
-                builder.startArray("category");
+                builder.startArray("categories");
                 for (String s : page.getCategories()) {
                     builder.value(s);
                 }
@@ -146,7 +144,7 @@ public class App
 
                 builder.endObject();
                 // For now, we index (and not create) since we need to keep track of what we indexed...
-                currentRequest.add(client.prepareIndex(indexName, "wikipage", page.getID()).setCreate(false).setSource(builder));
+                currentRequest.add(client.prepareIndex(indexName, "contentpage", page.getID()).setCreate(false).setSource(builder));
                 processBulkIfNeeded(page.getID());
             } catch (Exception e) {
                 logger.warn("failed to construct index request", e);

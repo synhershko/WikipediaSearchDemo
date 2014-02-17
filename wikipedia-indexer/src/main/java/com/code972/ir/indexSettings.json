@@ -1,50 +1,61 @@
-{"template":"{TEMPLATE-INDEX-NAME}", "settings":{
-    "number_of_shards":1,
-    "number_of_replicas":0
-    ,"more":{}
-}, "mappings":{
-    "wikipage":{
-        "_timestamp" : { "enabled": true },
-        "_source":{ "enabled":true },
-        "_all":{ "enabled":false },
-        "properties":{
-            "_analyzer":{
-                "type":"string",
-                "index":"no"
+{
+      "template": "hebrew-*",
+      "settings": {
+         "index.number_of_replicas": "0",
+         "index.number_of_shards": "1"
+      },
+      "mappings": {
+         "contentpage": {
+            "_source": {
+               "enabled": true
             },
-            "link":{
-                "type":"string",
-                "index":"not_analyzed"
+            "_timestamp": {
+               "enabled": true
             },
-            "category":{
-                "type":"string",
-                "index":"not_analyzed"
+            "properties": {
+               "disambiguation": {
+                  "type": "boolean"
+               },
+               "text": {
+                  "analyzer": "hebrew",
+                  "term_vector": "with_positions_offsets",
+                  "type": "string"
+               },
+               "title": {
+                  "analyzer": "hebrew",
+                  "term_vector": "with_positions_offsets",
+                  "type": "string"
+               },
+               "categories": {
+                  "index": "not_analyzed",
+                  "type": "string"
+               },
+               "searchable_tags": {
+                  "type": "string",
+                  "analyzer": "hebrew"
+               },
+               "_analyzer": {
+                  "index": "no",
+                  "type": "string"
+               },
+               "stub": {
+                  "type": "boolean"
+               },
+               "link": {
+                  "index": "not_analyzed",
+                  "type": "string"
+               },
+               "special": {
+                  "type": "boolean"
+               },
+               "redirect": {
+                  "index": "not_analyzed",
+                  "type": "string"
+               }
             },
-
-            "title":{
-                "type":"string",
-                "term_vector":"with_positions_offsets",
-                "analyzer":"wiki_analyzer"
-            },
-            "text":{
-                "type":"string",
-                "term_vector":"with_positions_offsets",
-                "analyzer":"wiki_analyzer"
-            },
-
-            "redirect":{
-                "type":"string",
-                "index":"not_analyzed"
-            },
-            "special":{
-                "type":"boolean"
-            },
-            "stub":{
-                "type":"boolean"
-            },
-            "disambiguation":{
-                "type":"boolean"
+            "_all": {
+               "enabled": false
             }
-        }
-    }
-}}
+         }
+      }
+}

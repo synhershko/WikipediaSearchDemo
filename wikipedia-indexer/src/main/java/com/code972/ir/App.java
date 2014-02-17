@@ -43,10 +43,10 @@ public class App
             return;
         }
 
-        final String wikipediaIndexName = "hebrew-wikipedia";
+        final String wikipediaIndexName = "hebrew-wikipedia-20140207";
 
         Settings settings = ImmutableSettings.settingsBuilder()
-                .put("cluster.name", "tests")
+                .put("cluster.name", "hebrew-search")
                 .put("node.name", "indexer").build();
 
         TransportClient transportClient = new TransportClient(settings);
@@ -109,8 +109,10 @@ public class App
                 logger.trace(String.format("page #%s: %s", page.getID(), page.getTitle()));
             }
 
-            if (page.isSpecialPage())
+            if (page.isSpecialPage()) {
+                //System.out.println(" - skipping " + title);
                 return;
+            }
 
             try {
                 XContentBuilder builder = XContentFactory.jsonBuilder().startObject();

@@ -62,8 +62,9 @@ public class App
             // do nothing to allow reindexing
         }
         final WikiXMLParser parser = WikiXMLParserFactory.getSAXParser(new File(dumpFile).toURL());
+        PageCallback pageCallback = new PageCallback(client, wikipediaIndexName);
         try {
-            parser.setPageCallback(new PageCallback(client, wikipediaIndexName));
+            parser.setPageCallback(pageCallback);
         } catch (Exception e) {
             //logger.error("failed to create parser", e);
             System.out.println(e);
@@ -71,6 +72,23 @@ public class App
         }
 
         parser.parse();
+
+        // Make sure the last batch goes in
+        if (pageCallback.currentRequest.numberOfActions() > 0) {
+            pageCallback.currentRequest.execute(new ActionListener<BulkResponse>() {
+                @Override
+                public void onResponse(BulkResponse bulkResponse) {
+                    if (bulkResponse.hasFailures()) {
+                        logger.warn("Bulk response has failures");
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable e) {
+                    logger.warn("failed to execute bulk");
+                }
+            });
+        }
     }
 
     public static String indexSettingsString(String templateIndexName, int replicas, String moreSettings) throws IOException {
@@ -115,15 +133,18 @@ public class App
             }
 
             try {
+                String text = page.getText().replace("{{דגש}}", "\u05BC").trim();
                 XContentBuilder builder = XContentFactory.jsonBuilder().startObject();
-                builder.field("title", title);
-                builder.field("text", page.getText().trim());
+                builder.field("title", title.replace("{{דגש}}", "\u05BC").trim());
+                builder.field("text", text);
 
                 if (page.isRedirect()) {
                     if (!Strings.isNullOrEmpty(page.getRedirectPage()))
                         builder.field("redirect", page.getRedirectPage());
                     else
                         builder.field("redirect", "#");
+                } else if (text.startsWith("#הפניה")) {
+                    builder.field("redirect", text.replaceAll("#הפניה", "").trim());
                 }
                 if (page.isSpecialPage())
                     builder.field("special", true);
